@@ -22,6 +22,23 @@ export default async function HomePage() {
 
   const hero = settings.hero || {};
   const contact = settings.contact || {};
+  const trust = settings.trust || {};
+  const commerce = settings.commerce || {};
+  const processSettings = settings.process || {};
+  const footerSettings = settings.footer || {};
+  const processSteps = Array.isArray(processSettings.steps) && processSettings.steps.length ? processSettings.steps : [
+    {title:"Ceritakan",description:"Tidak perlu brief sempurna."},
+    {title:"Kami pahami",description:"Masalah diterjemahkan menjadi solusi."},
+    {title:"Kami bangun",description:"Desain dan development dikerjakan."},
+    {title:"Anda review",description:"Revisi mengikuti paket yang dipilih."},
+    {title:"Launch",description:"Produk siap digunakan."},
+    {title:"Tetap ditemani",description:"Bug dalam scope tetap kami bantu."}
+  ];
+  const trustTags = Array.isArray(trust.tags) && trust.tags.length ? trust.tags : ["Produktivitas","Pendidikan","Bisnis","Wedding","Dashboard","Web"];
+  const helpLinks = Array.isArray(footerSettings.helpLinks) && footerSettings.helpLinks.length ? footerSettings.helpLinks : [
+    {label:"FAQ",href:"/#faq"},
+    {label:"Portfolio",href:"/portfolio"}
+  ];
   const featuredPortfolio = portfolios.slice(0, 3);
   const byKey = new Map(sectionRows.map((x:any) => [x.sectionKey, x]));
 
@@ -178,14 +195,7 @@ export default async function HomePage() {
         <div className="container">
           <div className="section-heading"><div className="eyebrow">{processSection.eyebrow}</div><h2>{processSection.title}</h2>{processSection.body&&<p>{processSection.body}</p>}</div>
           <div className="process-flow">
-            {[
-              ["01","Ceritakan","Tidak perlu brief sempurna."],
-              ["02","Kami pahami","Masalah diterjemahkan menjadi solusi."],
-              ["03","Kami bangun","Desain dan development dikerjakan."],
-              ["04","Anda review","Revisi mengikuti paket yang dipilih."],
-              ["05","Launch","Produk siap digunakan."],
-              ["06","Tetap ditemani","Bug dalam scope tetap kami bantu."],
-            ].map(([n,t,d]) => <div className="process-step" key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></div>)}
+            {processSteps.map((step:any,i:number) => <div className="process-step" key={String(step.title||i)}><span>{String(i+1).padStart(2,"0")}</span><h3>{step.title || "Langkah"}</h3><p>{step.description || ""}</p></div>)}
           </div>
         </div>
       </section>
@@ -255,7 +265,11 @@ export default async function HomePage() {
               <a className="button button-light" href={hero.primaryHref || "#produk"}>{hero.primaryLabel || "Jelajahi Produk"} <ArrowUpRight size={18}/></a>
               <WhatsAppLink number={contact.whatsapp || ""} message="Halo Teman Digital, saya ingin konsultasi tentang kebutuhan digital saya." label={hero.secondaryLabel || "Konsultasi via WhatsApp"} subject="Konsultasi dari Homepage" className="button button-ghost-light"/>
             </div>
-            <div className="hero-proof"><span><Check size={15}/> Produk mulai Rp39 ribu</span><span><Check size={15}/> Konsultasi tanpa biaya</span><span><Check size={15}/> Garansi bug sesuai scope</span></div>
+            <div className="hero-proof">
+              <span><Check size={15}/> {commerce.proofProduct || "Produk mulai Rp39 ribu"}</span>
+              <span><Check size={15}/> {commerce.proofConsultation || "Konsultasi tanpa biaya"}</span>
+              <span><Check size={15}/> {commerce.proofWarranty || "Garansi bug sesuai scope"}</span>
+            </div>
           </div>
           <div className="product-universe" aria-label="Ekosistem produk Teman Digital">
             <div className="universe-glow" /><div className="orbit orbit-one" /><div className="orbit orbit-two" />
@@ -266,7 +280,10 @@ export default async function HomePage() {
       </section>
 
       <section className="trust-strip">
-        <div className="container trust-row"><strong>Produk digital yang benar-benar dibuat untuk digunakan.</strong><div className="trust-tags"><span>Produktivitas</span><span>Pendidikan</span><span>Bisnis</span><span>Wedding</span><span>Dashboard</span><span>Web</span></div></div>
+        <div className="container trust-row">
+          <strong>{trust.title || "Produk digital yang benar-benar dibuat untuk digunakan."}</strong>
+          <div className="trust-tags">{trustTags.map((tag:string)=><span key={tag}>{tag}</span>)}</div>
+        </div>
       </section>
 
       <div className="home-sections">
@@ -278,9 +295,9 @@ export default async function HomePage() {
           <div className="footer-brand"><strong>{settings.brand?.name || "Teman Digital"}</strong><p>{settings.brand?.tagline}</p><small>{settings.footer?.note}</small></div>
           <div><strong>Produk</strong>{products.slice(0,5).map((p:any)=><Link href={`/produk/${p.slug}`} key={p.slug}>{p.name}</Link>)}</div>
           <div><strong>Layanan</strong>{services.map((s:any)=><a href="#jasa" key={s.slug}>{s.name}</a>)}</div>
-          <div><strong>Bantuan</strong><a href="#faq">FAQ</a><a href="/portfolio">Portfolio</a><a href={`mailto:${contact.email || "temandigital26@gmail.com"}`}>Email</a></div>
+          <div><strong>Bantuan</strong>{helpLinks.map((item:any,i:number)=><a href={item.href || "#"} key={String(item.label||i)}>{item.label || "Link"}</a>)}<a href={`mailto:${contact.email || "temandigital26@gmail.com"}`}>Email</a></div>
         </div>
-        <div className="container footer-bottom"><span>© 2026 {settings.brand?.name || "Teman Digital"}</span><span>{settings.brand?.tagline || "Bangun Lebih Baik. Tumbuh Lebih Cepat."}</span></div>
+        <div className="container footer-bottom"><span>{footerSettings.copyright || `© 2026 ${settings.brand?.name || "Teman Digital"}`}</span><span>{footerSettings.closingTagline || settings.brand?.tagline || "Bangun Lebih Baik. Tumbuh Lebih Cepat."}</span></div>
       </footer>
     </main>
   );
