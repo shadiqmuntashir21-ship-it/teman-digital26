@@ -163,3 +163,16 @@ export const admins = pgTable("admins", {
   active: boolean("active").notNull().default(true),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 }, (t) => [uniqueIndex("admins_email_idx").on(t.email)]);
+
+
+export const auditLogs = pgTable("audit_logs", {
+  id: serial("id").primaryKey(),
+  adminEmail: varchar("admin_email", { length: 220 }).notNull(),
+  entity: varchar("entity", { length: 100 }).notNull(),
+  action: varchar("action", { length: 40 }).notNull(),
+  entityId: integer("entity_id"),
+  summary: text("summary"),
+  before: jsonb("before").$type<Record<string, unknown> | null>(),
+  after: jsonb("after").$type<Record<string, unknown> | null>(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
