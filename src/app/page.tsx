@@ -22,6 +22,7 @@ export default async function HomePage() {
 
   const hero = settings.hero || {};
   const contact = settings.contact || {};
+  const whatsappDigits = String(contact.whatsapp || "").replace(/\D/g,"").replace(/^0/,"62");
   const trust = settings.trust || {};
   const commerce = settings.commerce || {};
   const processSettings = settings.process || {};
@@ -295,7 +296,7 @@ export default async function HomePage() {
           <div className="footer-brand"><strong>{settings.brand?.name || "Teman Digital"}</strong><p>{settings.brand?.tagline}</p><small>{settings.footer?.note}</small></div>
           <div><strong>Produk</strong>{products.slice(0,5).map((p:any)=><Link href={`/produk/${p.slug}`} key={p.slug}>{p.name}</Link>)}</div>
           <div><strong>Layanan</strong>{services.map((s:any)=><a href="#jasa" key={s.slug}>{s.name}</a>)}</div>
-          <div><strong>Bantuan</strong>{helpLinks.map((item:any,i:number)=><a href={item.href || "#"} key={String(item.label||i)}>{item.label || "Link"}</a>)}<a href={`mailto:${contact.email || "temandigital26@gmail.com"}`}>Email</a></div>
+          <div><strong>Bantuan</strong>{helpLinks.map((item:any,i:number)=><a href={item.href || "#"} key={String(item.label||i)}>{item.label || "Link"}</a>)}<a href={`mailto:${contact.email || "temandigital26@gmail.com"}`}>Email</a>{whatsappDigits&&<a href={`https://wa.me/${whatsappDigits}`} target="_blank" rel="noreferrer">WhatsApp</a>}{contact.instagram&&<a href={contact.instagram} target="_blank" rel="noreferrer">Instagram</a>}{contact.tiktok&&<a href={contact.tiktok} target="_blank" rel="noreferrer">TikTok</a>}</div>
         </div>
         <div className="container footer-bottom"><span>{footerSettings.copyright || `© 2026 ${settings.brand?.name || "Teman Digital"}`}</span><span>{footerSettings.closingTagline || settings.brand?.tagline || "Bangun Lebih Baik. Tumbuh Lebih Cepat."}</span></div>
       </footer>
