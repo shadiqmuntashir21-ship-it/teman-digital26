@@ -46,6 +46,11 @@ export async function getPortfolios() {
   catch { return []; }
 }
 
+export async function getPortfolio(slug:string) {
+  const list = await getPortfolios();
+  return list.find((x:any) => x.slug === slug) || null;
+}
+
 export async function getTestimonials() {
   const db = getDb();
   if (!db) return [];
