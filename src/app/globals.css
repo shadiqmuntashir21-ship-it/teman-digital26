@@ -250,3 +250,33 @@ p{color:var(--muted);line-height:1.75}
 @media(max-width:640px){
   .announcement-bar{width:calc(100% - 20px);font-size:9px;min-height:32px;margin-bottom:6px}
 }
+
+
+/* Mobile admin navigation: keep every CMS section reachable */
+@media(max-width:640px){
+  .admin-sidebar nav{
+    display:flex;
+    grid-template-columns:none;
+    gap:5px;
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+    padding:0;
+  }
+  .admin-sidebar nav::-webkit-scrollbar{display:none}
+  .admin-sidebar nav button,
+  .admin-sidebar nav button:nth-child(n+7){
+    display:flex;
+    flex:0 0 auto;
+    min-width:max-content;
+    height:50px;
+    padding:0 12px;
+    gap:6px;
+  }
+  .admin-sidebar nav button span{
+    display:block;
+    font-size:9px;
+    white-space:nowrap;
+  }
+}
