@@ -127,6 +127,7 @@ export const paymentMethods = pgTable("payment_methods", {
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   code: varchar("code", { length: 40 }).notNull(),
+  accessToken: varchar("access_token", { length: 80 }).notNull(),
   customerName: varchar("customer_name", { length: 180 }).notNull(),
   customerEmail: varchar("customer_email", { length: 220 }).notNull(),
   customerWhatsapp: varchar("customer_whatsapp", { length: 80 }).notNull(),
@@ -139,7 +140,10 @@ export const orders = pgTable("orders", {
   notes: text("notes"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
-}, (t) => [uniqueIndex("orders_code_idx").on(t.code)]);
+}, (t) => [
+  uniqueIndex("orders_code_idx").on(t.code),
+  uniqueIndex("orders_access_token_idx").on(t.accessToken),
+]);
 
 export const leads = pgTable("leads", {
   id: serial("id").primaryKey(),
