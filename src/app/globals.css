@@ -205,3 +205,8 @@ p{color:var(--muted);line-height:1.75}
 .admin-upload-button input{display:none}
 .admin-media-error{color:#be123c!important}
 @media(max-width:640px){.admin-media-row{grid-template-columns:1fr}.admin-media-row>img,.admin-media-empty{width:100%;height:160px}}
+
+
+.proof-form{margin-top:16px;background:#fff;border:1px solid #e3eaf2;border-radius:24px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center}
+.proof-form h3{font-size:22px;margin:7px 0 4px}.proof-form p{font-size:10px;margin:0}.proof-form>.button{grid-column:2}.proof-drop{min-height:86px;border:1px dashed #b9c8d8;border-radius:15px;background:#f8fbff;display:flex;align-items:center;justify-content:center;gap:9px;padding:14px;color:#52708f;cursor:pointer;font-size:10px;font-weight:800}.proof-drop input{display:none}.proof-message{grid-column:1/3;padding:10px 12px;border-radius:11px;background:#eff8ff;color:#1e5f9c;font-size:10px}.proof-received{margin-top:16px;background:#ecfdf3;border:1px solid #c8f2db;border-radius:18px;padding:16px 18px;display:flex;gap:10px;align-items:flex-start;color:#117a4b}.proof-received div{display:flex;flex-direction:column;gap:3px}.proof-received strong{font-size:11px}.proof-received span{font-size:9px;line-height:1.5;color:#448165}
+@media(max-width:640px){.proof-form{grid-template-columns:1fr}.proof-form>.button,.proof-message{grid-column:1}}
