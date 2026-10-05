@@ -194,3 +194,14 @@ p{color:var(--muted);line-height:1.75}
 
 .home-section-slot{display:contents}
 .product-real-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+
+.admin-media-field{display:flex;flex-direction:column;gap:7px}
+.admin-media-row{display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:stretch}
+.admin-media-row>img,.admin-media-empty{width:130px;height:92px;border-radius:13px;border:1px solid #dce4ed;object-fit:cover;background:#f7f9fc}
+.admin-media-empty{display:grid;place-items:center;color:#98a6b6;font-size:9px;text-align:center;padding:10px}
+.admin-media-controls{display:flex;flex-direction:column;gap:8px}
+.admin-upload-button{display:inline-flex!important;align-items:center;justify-content:center;width:max-content;padding:9px 12px;border-radius:10px;background:#eef5ff;color:#1d5fb9!important;font-size:9px!important;font-weight:900!important;cursor:pointer}
+.admin-upload-button input{display:none}
+.admin-media-error{color:#be123c!important}
+@media(max-width:640px){.admin-media-row{grid-template-columns:1fr}.admin-media-row>img,.admin-media-empty{width:100%;height:160px}}
