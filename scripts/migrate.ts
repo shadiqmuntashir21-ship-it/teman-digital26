@@ -144,6 +144,17 @@ await sql.transaction([
     active boolean NOT NULL DEFAULT true,
     created_at timestamptz NOT NULL DEFAULT now()
   )`,
+  sql`CREATE TABLE IF NOT EXISTS audit_logs (
+    id serial PRIMARY KEY,
+    admin_email varchar(220) NOT NULL,
+    entity varchar(100) NOT NULL,
+    action varchar(40) NOT NULL,
+    entity_id integer,
+    summary text,
+    before jsonb,
+    after jsonb,
+    created_at timestamptz NOT NULL DEFAULT now()
+  )`,
 ]);
 
 // Backward-compatible patch if an early development database already had an orders table.
