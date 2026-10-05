@@ -30,6 +30,24 @@ for (const p of productRows) {
   ON CONFLICT (slug) DO NOTHING`;
 }
 
+const homepageRows = [
+  ["choices","MULAI DARI SINI","Sudah jadi, atau bangun milikmu sendiri.","Dua jalur yang jelas. Pilih produk siap pakai untuk mulai cepat, atau ceritakan kebutuhanmu untuk solusi custom.",10],
+  ["products","PRODUK TEMAN DIGITAL","Solusi siap pakai untuk pekerjaan yang nyata.","",20],
+  ["services","JASA CUSTOM","Butuh sesuatu yang khusus?","Harga awal transparan. Scope dibahas lebih dulu supaya solusi yang dibuat tepat, bukan sekadar banyak fitur.",30],
+  ["portfolio","SELECTED WORKS","Bukan sekadar dibuat. Harus berguna.","",40],
+  ["process","CARA KAMI BEKERJA","Dari cerita singkat sampai siap dipakai.","",50],
+  ["warranty","GARANSI TEMAN DIGITAL","Bug tidak punya masa garansi.","Jika error terjadi pada fitur yang termasuk scope awal pekerjaan, kami tetap membantu memperbaikinya. Penambahan fitur atau perubahan scope baru tidak termasuk garansi.",60],
+  ["testimonials","CERITA PENGGUNA","Yang paling penting: benar-benar membantu.","",70],
+  ["faq","FAQ","Sebelum mulai, mungkin ini yang ingin ditanyakan.","Pertanyaan umum tentang produk, jasa, proses pengerjaan, pembayaran, revisi, dan garansi.",80],
+  ["consultation","MULAI DARI CERITA","Ada ide? Ceritakan saja dulu.","Tidak harus tahu teknologi apa yang dibutuhkan. Jelaskan masalah atau idenya, kami bantu memikirkan langkah berikutnya.",90]
+] as const;
+
+for (const h of homepageRows) {
+  await sql`INSERT INTO homepage_sections (section_key,eyebrow,title,body,enabled,sort_order)
+  VALUES (${h[0]},${h[1]},${h[2]},${h[3]},true,${h[4]})
+  ON CONFLICT (section_key) DO NOTHING`;
+}
+
 const serviceRows = [
   ["landing-page","Landing Page","Halaman penjualan, promosi, atau profil yang fokus pada konversi.",150000,"2–4 hari kerja","Maks. 5 revisi",1],
   ["dashboard","Dashboard","Dashboard operasional, monitoring, analitik, atau administrasi sesuai kebutuhan.",249000,"4–7 hari kerja","Maks. 5 revisi",2],
