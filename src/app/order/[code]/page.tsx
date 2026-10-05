@@ -1,10 +1,11 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { Check, Clock3, Mail, MessageCircle } from "lucide-react";
 import { getDb } from "@/db/client";
 import { orders, paymentMethods } from "@/db/schema";
 import { getSettings } from "@/lib/cms";
 import { rupiah } from "@/lib/format";
+import { PaymentProofForm } from "@/components/payment-proof-form";
 
 export const dynamic="force-dynamic";
 
@@ -21,12 +22,21 @@ function level(status:string){
   return map[status]??0;
 }
 
-export default async function OrderPage({params}:{params:Promise<{code:string}>}){
-  const {code}=await params;
+export default async function OrderPage({
+  params,
+  searchParams
+}:{
+  params:Promise<{code:string}>;
+  searchParams:Promise<{token?:string}>
+}){
+  const [{code},{token}]=await Promise.all([params,searchParams]);
   const db=getDb();
   if(!db) return <main className="order-page"><div className="order-shell"><h1>Database belum terhubung.</h1><p>Hubungkan DATABASE_URL agar halaman status pesanan aktif.</p></div></main>;
-  const [order]=await db.select().from(orders).where(eq(orders.code,code)).limit(1);
+  if(!token) notFound();
+
+  const [order]=await db.select().from(orders).where(and(eq(orders.code,code),eq(orders.accessToken,token))).limit(1);
   if(!order) notFound();
+
   const method=order.paymentMethodId?(await db.select().from(paymentMethods).where(eq(paymentMethods.id,order.paymentMethodId)).limit(1))[0]:null;
   const settings=await getSettings();
   const current=level(order.status);
@@ -49,6 +59,10 @@ export default async function OrderPage({params}:{params:Promise<{code:string}>}
           {method&&<div className="payment-instruction"><small>Bayar melalui</small><strong>{method.name}</strong>{method.accountNumber&&<code>{method.accountNumber}</code>}{method.accountName&&<span>a.n. {method.accountName}</span>}{method.instructions&&<p>{method.instructions}</p>}</div>}
         </section>
       </div>
+
+      {order.status==="MENUNGGU_PEMBAYARAN"&&<PaymentProofForm code={order.code} token={token}/>}
+      {order.status==="MENUNGGU_VERIFIKASI"&&<div className="proof-received"><Check size={18}/><div><strong>Bukti pembayaran sudah diterima.</strong><span>Admin Teman Digital akan melakukan verifikasi. Status halaman ini akan diperbarui setelah pembayaran dikonfirmasi.</span></div></div>}
+
       <div className="order-help"><Mail size={16}/><span>Konfirmasi dan akses dikirim ke <strong>{order.customerEmail}</strong>.</span><a href={waHref}><MessageCircle size={15}/> Butuh bantuan?</a></div>
     </div>
   </main>
