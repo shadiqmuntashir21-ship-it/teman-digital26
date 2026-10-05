@@ -57,7 +57,8 @@ const configs:Record<string,{label:string;singular:string;fields:Field[];readOnl
     {key:"status",label:"Status",type:"select",options:["MENUNGGU_PEMBAYARAN","MENUNGGU_VERIFIKASI","LUNAS","DIPROSES","SELESAI","DIBATALKAN"]},
     {key:"notes",label:"Catatan admin",type:"textarea"}
   ]},
-  leads:{label:"Leads WhatsApp",singular:"Lead",fields:[],readOnly:true}
+  leads:{label:"Leads WhatsApp",singular:"Lead",fields:[],readOnly:true},
+  auditLogs:{label:"Riwayat Perubahan",singular:"Riwayat",fields:[],readOnly:true}
 };
 
 const settingFields:Record<string,Field[]>={
@@ -165,7 +166,7 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
 
   async function logout(){await fetch("/api/admin/logout",{method:"POST"});location.href="/admin/login"}
 
-  const menu=[["overview","Ringkasan"],["settings","Website & Brand"],["products","Produk"],["services","Jasa"],["portfolios","Portfolio"],["testimonials","Testimoni"],["faqs","FAQ"],["paymentMethods","Pembayaran"],["homepageSections","Section Homepage"],["orders","Pesanan"],["leads","Leads WhatsApp"]];
+  const menu=[["overview","Ringkasan"],["settings","Website & Brand"],["products","Produk"],["services","Jasa"],["portfolios","Portfolio"],["testimonials","Testimoni"],["faqs","FAQ"],["paymentMethods","Pembayaran"],["homepageSections","Section Homepage"],["orders","Pesanan"],["leads","Leads WhatsApp"],["auditLogs","Riwayat"]];
 
   if(!data) return <div className="admin-loading"><RefreshCw className="spin"/> Menyiapkan Control Center...</div>;
 
@@ -205,8 +206,8 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
         </div>
         <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Item</th><th>Detail</th><th>Status</th><th>Aksi</th></tr></thead>
           <tbody>{rows.map((row:AnyRow)=><tr key={row.id}>
-            <td><strong>{row.name||row.title||row.question||row.code||row.subject||row.sectionKey||"Item"}</strong><small>{row.slug||row.category||row.customerName||row.page||""}</small></td>
-            <td><span>{row.price?Number(row.price).toLocaleString("id-ID"):""}{row.startingPrice?Number(row.startingPrice).toLocaleString("id-ID"):""}{row.summary||row.description||row.answer||row.customerEmail||row.source||""}</span></td>
+            <td><strong>{row.name||row.title||row.question||row.code||row.subject||row.summary||row.sectionKey||row.entity||"Item"}</strong><small>{row.slug||row.category||row.customerName||row.page||row.adminEmail||""}</small></td>
+            <td><span>{row.price?Number(row.price).toLocaleString("id-ID"):""}{row.startingPrice?Number(row.startingPrice).toLocaleString("id-ID"):""}{row.auditLogs?"":""}{row.description||row.answer||row.customerEmail||row.source||row.action||""}</span></td>
             <td><Status row={row}/></td>
             <td><div className="admin-row-actions">
               {row.previewUrl&&<a href={row.previewUrl} target="_blank" rel="noreferrer" title="Preview web"><ExternalLink size={15}/></a>}
