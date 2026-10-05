@@ -7,6 +7,7 @@ import {
   products, services, siteSettings, testimonials
 } from "@/db/schema";
 
+type AnyRow = Record<string, unknown>;
 const map:any={products,services,portfolios,testimonials,faqs,paymentMethods,homepageSections,orders};
 
 function sanitize(entity:string,data:any){
@@ -71,16 +72,16 @@ export async function POST(req:Request){
 
   if(action==="create"){
     const data=sanitize(entity,body.data||{});
-    const [row]=await db.insert(table).values(data).returning();
-    return NextResponse.json({ok:true,row});
+    const created = await db.insert(table).values(data).returning() as unknown as AnyRow[];
+    return NextResponse.json({ok:true,row:created[0]});
   }
   if(action==="update"){
     const id=Number(body.id);
     const data=sanitize(entity,body.data||{});
     if(entity==="orders") data.updatedAt=new Date();
     if(entity==="products"||entity==="portfolios") data.updatedAt=new Date();
-    const [row]=await db.update(table).set(data).where(eq(table.id,id)).returning();
-    return NextResponse.json({ok:true,row});
+    const updated = await db.update(table).set(data).where(eq(table.id,id)).returning() as unknown as AnyRow[];
+    return NextResponse.json({ok:true,row:updated[0]});
   }
   if(action==="delete"){
     const id=Number(body.id);
