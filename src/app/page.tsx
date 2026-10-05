@@ -166,7 +166,7 @@ export default async function HomePage() {
                 {p.coverUrl ? <img src={p.coverUrl} alt={p.title}/> : <div className="portfolio-placeholder"><span>{p.category}</span><strong>{p.title}</strong></div>}
                 {p.previewUrl && <a href={p.previewUrl} target="_blank" rel="noreferrer" className="live-chip">Preview live <ArrowUpRight size={14}/></a>}
               </div>
-              <div className="portfolio-copy"><span>{p.category}</span><h3>{p.title}</h3><p>{p.summary}</p></div>
+              <div className="portfolio-copy"><span>{p.category}</span><h3>{p.title}</h3><p>{p.summary}</p><Link href={`/portfolio/${p.slug}`} className="case-link">Lihat Studi Kasus <ArrowUpRight size={14}/></Link></div>
             </article>
           ))}</div> : <div className="empty-showcase"><span>Portfolio siap ditambahkan dari Dashboard Admin</span><strong>Tambahkan screenshot, deskripsi, teknologi, dan URL preview tanpa menyentuh kode.</strong></div>}
         </div>
