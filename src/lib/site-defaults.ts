@@ -15,6 +15,39 @@ export const defaultSettings = {
     primaryHref: "#produk",
     secondaryLabel: "Konsultasi via WhatsApp",
   },
+  navigation: {
+    links: [
+      { label: "Produk", href: "/#produk" },
+      { label: "Jasa", href: "/jasa" },
+      { label: "Portfolio", href: "/portfolio" },
+      { label: "Cara Kerja", href: "/#cara-kerja" },
+      { label: "FAQ", href: "/#faq" }
+    ],
+    ctaLabel: "Konsultasi Gratis",
+    ctaHref: "/#konsultasi",
+    announcementEnabled: false,
+    announcementText: "",
+    announcementHref: ""
+  },
+  trust: {
+    title: "Produk digital yang benar-benar dibuat untuk digunakan.",
+    tags: ["Produktivitas","Pendidikan","Bisnis","Wedding","Dashboard","Web"]
+  },
+  process: {
+    steps: [
+      { title: "Ceritakan", description: "Tidak perlu brief sempurna." },
+      { title: "Kami pahami", description: "Masalah diterjemahkan menjadi solusi." },
+      { title: "Kami bangun", description: "Desain dan development dikerjakan." },
+      { title: "Anda review", description: "Revisi mengikuti paket yang dipilih." },
+      { title: "Launch", description: "Produk siap digunakan." },
+      { title: "Tetap ditemani", description: "Bug dalam scope tetap kami bantu." }
+    ]
+  },
+  commerce: {
+    proofProduct: "Produk mulai Rp39 ribu",
+    proofConsultation: "Konsultasi tanpa biaya",
+    proofWarranty: "Garansi bug sesuai scope"
+  },
   contact: {
     whatsapp: "",
     email: "temandigital26@gmail.com",
@@ -23,6 +56,12 @@ export const defaultSettings = {
   },
   footer: {
     note: "Solusi digital yang rapi, modern, dan benar-benar bisa dipakai.",
+    copyright: "© 2026 Teman Digital",
+    closingTagline: "Bangun Lebih Baik. Tumbuh Lebih Cepat.",
+    helpLinks: [
+      { label: "FAQ", href: "/#faq" },
+      { label: "Portfolio", href: "/portfolio" }
+    ]
   },
   seo: {
     title: "Teman Digital — Produk & Solusi Digital",
