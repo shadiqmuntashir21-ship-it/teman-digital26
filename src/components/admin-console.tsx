@@ -61,10 +61,14 @@ const configs:Record<string,{label:string;singular:string;fields:Field[];readOnl
 };
 
 const settingFields:Record<string,Field[]>={
-  brand:[{key:"name",label:"Nama brand"},{key:"tagline",label:"Tagline"},{key:"logoUrl",label:"Logo resmi URL",type:"url"},{key:"primary",label:"Navy"},{key:"blue",label:"Blue"},{key:"cyan",label:"Cyan"}],
+  brand:[{key:"name",label:"Nama brand"},{key:"tagline",label:"Tagline"},{key:"logoUrl",label:"Logo resmi",type:"media"},{key:"primary",label:"Navy"},{key:"blue",label:"Blue"},{key:"cyan",label:"Cyan"}],
   hero:[{key:"eyebrow",label:"Eyebrow"},{key:"title",label:"Headline"},{key:"body",label:"Subheadline",type:"textarea"},{key:"primaryLabel",label:"Label tombol utama"},{key:"primaryHref",label:"Link tombol utama"},{key:"secondaryLabel",label:"Label tombol WhatsApp"}],
+  navigation:[{key:"links",label:"Menu navigasi (JSON)",type:"json",hint:"Format: [{\"label\":\"Produk\",\"href\":\"/#produk\"}]"},{key:"ctaLabel",label:"Label tombol CTA"},{key:"ctaHref",label:"Link tombol CTA"},{key:"announcementEnabled",label:"Tampilkan pengumuman",type:"boolean"},{key:"announcementText",label:"Teks pengumuman"},{key:"announcementHref",label:"Link pengumuman"}],
+  trust:[{key:"title",label:"Teks trust strip"},{key:"tags",label:"Tag kategori (satu per baris)",type:"lines"}],
+  process:[{key:"steps",label:"Langkah cara kerja (JSON)",type:"json",hint:"Format: [{\"title\":\"Ceritakan\",\"description\":\"...\"}]"}],
+  commerce:[{key:"proofProduct",label:"Micro-proof produk"},{key:"proofConsultation",label:"Micro-proof konsultasi"},{key:"proofWarranty",label:"Micro-proof garansi"}],
   contact:[{key:"whatsapp",label:"Nomor WhatsApp",hint:"Contoh: 62812..."},{key:"email",label:"Email"},{key:"instagram",label:"Instagram URL",type:"url"},{key:"tiktok",label:"TikTok URL",type:"url"}],
-  footer:[{key:"note",label:"Catatan footer",type:"textarea"}],
+  footer:[{key:"note",label:"Catatan footer",type:"textarea"},{key:"copyright",label:"Teks copyright"},{key:"closingTagline",label:"Tagline penutup"},{key:"helpLinks",label:"Link bantuan footer (JSON)",type:"json"}],
   seo:[{key:"title",label:"SEO title"},{key:"description",label:"SEO description",type:"textarea"}],
 };
 
@@ -187,7 +191,7 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
       </div>}
 
       {tab==="settings"&&<div className="admin-panel">
-        <div className="settings-tabs">{Object.keys(settingFields).map(k=><button className={settingsKey===k?"active":""} onClick={()=>setSettingsKey(k)} key={k}>{k==="brand"?"Brand":k==="hero"?"Hero":k==="contact"?"Kontak":k==="footer"?"Footer":"SEO"}</button>)}</div>
+        <div className="settings-tabs">{Object.keys(settingFields).map(k=><button className={settingsKey===k?"active":""} onClick={()=>setSettingsKey(k)} key={k}>{k==="brand"?"Brand":k==="hero"?"Hero":k==="navigation"?"Navigasi":k==="trust"?"Trust Strip":k==="process"?"Cara Kerja":k==="commerce"?"Penjualan":k==="contact"?"Kontak":k==="footer"?"Footer":"SEO"}</button>)}</div>
         <div className="admin-form-grid">{settingFields[settingsKey].map(f=><FormField key={f.key} field={f} value={settingsForm[f.key]} onChange={v=>setSettingsForm(x=>({...x,[f.key]:v}))}/>)}</div>
         <div className="admin-form-actions"><button className="button" onClick={saveSettings} disabled={busy}><Save size={16}/> Simpan Pengaturan</button></div>
       </div>}
