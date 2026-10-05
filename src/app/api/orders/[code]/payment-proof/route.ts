@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { put } from "@vercel/blob";
 import { getDb } from "@/db/client";
 import { orders } from "@/db/schema";
+import { emailPaymentProofReceived } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,11 @@ export async function POST(req:Request,{params}:{params:Promise<{code:string}>})
     status:"MENUNGGU_VERIFIKASI",
     updatedAt:new Date(),
   }).where(eq(orders.id,order.id));
+
+  void emailPaymentProofReceived({
+    code:order.code,
+    productName:String((order.productSnapshot as any)?.name || "Produk Teman Digital"),
+  });
 
   return NextResponse.json({ok:true,status:"MENUNGGU_VERIFIKASI"});
 }
