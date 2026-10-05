@@ -170,6 +170,14 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
 
   if(!data) return <div className="admin-loading"><RefreshCw className="spin"/> Menyiapkan Control Center...</div>;
 
+  const paidStatuses=new Set(["LUNAS","DIPROSES","SELESAI"]);
+  const revenue=data.orders
+    .filter((x:any)=>paidStatuses.has(String(x.status)))
+    .reduce((sum:number,x:any)=>sum+Number(x.amount||0),0);
+  const pendingVerification=data.orders.filter((x:any)=>x.status==="MENUNGGU_VERIFIKASI").length;
+  const completedOrders=data.orders.filter((x:any)=>x.status==="SELESAI").length;
+  const money=(n:number)=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n);
+
   return <main className="admin-shell">
     <aside className="admin-sidebar">
       <div className="admin-sidebar-brand"><strong>Teman Digital</strong><span>CONTROL CENTER</span></div>
@@ -183,13 +191,26 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
 
       {tab==="overview"&&<div className="admin-overview">
         <div className="admin-stat-grid">
-          <div><span>Produk</span><strong>{data.products.length}</strong><small>{data.products.filter((x:any)=>x.published).length} tampil</small></div>
-          <div><span>Portfolio</span><strong>{data.portfolios.length}</strong><small>{data.portfolios.filter((x:any)=>x.published).length} tampil</small></div>
-          <div><span>Pesanan</span><strong>{data.orders.length}</strong><small>{data.orders.filter((x:any)=>x.status==="MENUNGGU_VERIFIKASI").length} perlu verifikasi</small></div>
+          <div><span>Penjualan diterima</span><strong className="money">{money(revenue)}</strong><small>Status Lunas, Diproses, dan Selesai</small></div>
+          <div><span>Pesanan</span><strong>{data.orders.length}</strong><small>{completedOrders} selesai</small></div>
+          <div><span>Perlu verifikasi</span><strong>{pendingVerification}</strong><small>Bukti pembayaran menunggu tindakan</small></div>
           <div><span>Leads WA</span><strong>{data.leads.length}</strong><small>100 aktivitas terbaru</small></div>
         </div>
         <div className="admin-panel"><div className="admin-panel-head"><div><span className="admin-kicker">PRINSIP CMS</span><h2>Semua yang sering berubah, jangan di-hard-code.</h2></div></div>
-          <div className="admin-check-grid">{["Harga dan produk","Link demo & aplikasi","Portfolio & preview URL","Jasa dan estimasi","FAQ & testimoni","Metode pembayaran","Kontak & WhatsApp","Headline & brand","Status publish","Urutan tampilan","Status pesanan","SEO dasar"].map(x=><span key={x}>✓ {x}</span>)}</div>
+          <div className="admin-check-grid">{[
+            `${data.products.filter((x:any)=>x.published).length} produk aktif`,
+            `${data.portfolios.filter((x:any)=>x.published).length} portfolio tampil`,
+            "Link demo & aplikasi",
+            "Portfolio & preview URL",
+            "Jasa dan estimasi",
+            "FAQ & testimoni",
+            "Metode pembayaran",
+            "Kontak & WhatsApp",
+            "Navigasi & pengumuman",
+            "Urutan section",
+            "Status pesanan",
+            "SEO dasar"
+          ].map(x=><span key={x}>✓ {x}</span>)}</div>
         </div>
       </div>}
 
