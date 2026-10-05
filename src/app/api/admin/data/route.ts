@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { asc, desc, eq } from "drizzle-orm";
 import { getSession } from "@/lib/auth";
 import { getDb } from "@/db/client";
+import { emailOrderStatus } from "@/lib/email";
 import {
   faqs, homepageSections, leads, orders, paymentMethods, portfolios,
   products, services, siteSettings, testimonials
@@ -78,10 +79,27 @@ export async function POST(req:Request){
   if(action==="update"){
     const id=Number(body.id);
     const data=sanitize(entity,body.data||{});
-    if(entity==="orders") data.updatedAt=new Date();
+    let previousOrder:any=null;
+    if(entity==="orders"){
+      previousOrder=(await db.select().from(orders).where(eq(orders.id,id)).limit(1))[0] || null;
+      data.updatedAt=new Date();
+    }
     if(entity==="products"||entity==="portfolios") data.updatedAt=new Date();
     const updated = await db.update(table).set(data).where(eq(table.id,id)).returning() as unknown as AnyRow[];
-    return NextResponse.json({ok:true,row:updated[0]});
+    const row:any=updated[0];
+
+    if(entity==="orders" && previousOrder && row?.status && row.status!==previousOrder.status){
+      void emailOrderStatus({
+        code:String(row.code),
+        customerEmail:String(row.customerEmail),
+        customerName:String(row.customerName),
+        productName:String((row.productSnapshot as any)?.name || "Produk Teman Digital"),
+        status:String(row.status),
+        accessToken:String(row.accessToken),
+      });
+    }
+
+    return NextResponse.json({ok:true,row});
   }
   if(action==="delete"){
     const id=Number(body.id);
