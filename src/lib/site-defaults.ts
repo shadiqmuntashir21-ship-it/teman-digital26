@@ -48,6 +48,25 @@ export const defaultSettings = {
     proofConsultation: "Konsultasi tanpa biaya",
     proofWarranty: "Garansi bug sesuai scope"
   },
+  servicesPage: {
+    eyebrow: "JASA TEMAN DIGITAL",
+    title: "Solusi custom, tanpa dibuat rumit.",
+    body: "Ceritakan kebutuhanmu. Kami bantu merancang solusi yang tepat dan tetap realistis untuk digunakan.",
+    finalEyebrow: "BELUM TAHU PAKETNYA?",
+    finalTitle: "Ceritakan masalahnya, bukan teknologinya.",
+    finalButton: "Konsultasi Gratis",
+    finalWhatsappMessage: "Halo Teman Digital, saya punya kebutuhan digital tapi belum tahu layanan yang cocok."
+  },
+  portfolioPage: {
+    eyebrow: "PORTFOLIO",
+    title: "Masalah nyata. Solusi yang benar-benar dipakai.",
+    body: "Kami menampilkan project sebagai studi kasus—bukan sekadar galeri screenshot.",
+    caseStudyLabel: "Lihat Studi Kasus",
+    previewLabel: "Preview Web",
+    extraLinkLabel: "Link tambahan",
+    emptyTitle: "Portfolio akan tampil di sini.",
+    emptyBody: "Admin dapat menambah project, screenshot, kategori, studi kasus, teknologi, dan link preview dari dashboard."
+  },
   contact: {
     whatsapp: "",
     email: "temandigital26@gmail.com",
