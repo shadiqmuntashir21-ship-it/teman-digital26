@@ -203,7 +203,8 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
             <td><span>{row.price?Number(row.price).toLocaleString("id-ID"):""}{row.startingPrice?Number(row.startingPrice).toLocaleString("id-ID"):""}{row.summary||row.description||row.answer||row.customerEmail||row.source||""}</span></td>
             <td><Status row={row}/></td>
             <td><div className="admin-row-actions">
-              {row.previewUrl&&<a href={row.previewUrl} target="_blank" title="Preview web"><ExternalLink size={15}/></a>}
+              {row.previewUrl&&<a href={row.previewUrl} target="_blank" rel="noreferrer" title="Preview web"><ExternalLink size={15}/></a>}
+              {row.paymentProofUrl&&<a href={row.paymentProofUrl} target="_blank" rel="noreferrer" title="Lihat bukti pembayaran"><Eye size={15}/></a>}
               {!configs[tab].readOnly&&<button onClick={()=>openEditor(tab,row)} title="Edit"><Pencil size={15}/></button>}
               {!configs[tab].readOnly&&tab!=="orders"&&<button className="danger" onClick={()=>remove(tab,row.id)} title="Hapus"><Trash2 size={15}/></button>}
             </div></td>
