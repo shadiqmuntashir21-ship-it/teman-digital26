@@ -67,6 +67,8 @@ const settingFields:Record<string,Field[]>={
   trust:[{key:"title",label:"Teks trust strip"},{key:"tags",label:"Tag kategori (satu per baris)",type:"lines"}],
   process:[{key:"steps",label:"Langkah cara kerja (JSON)",type:"json",hint:"Format: [{\"title\":\"Ceritakan\",\"description\":\"...\"}]"}],
   commerce:[{key:"proofProduct",label:"Micro-proof produk"},{key:"proofConsultation",label:"Micro-proof konsultasi"},{key:"proofWarranty",label:"Micro-proof garansi"}],
+  servicesPage:[{key:"eyebrow",label:"Eyebrow"},{key:"title",label:"Headline"},{key:"body",label:"Deskripsi",type:"textarea"},{key:"finalEyebrow",label:"Eyebrow CTA akhir"},{key:"finalTitle",label:"Headline CTA akhir"},{key:"finalButton",label:"Label tombol CTA"},{key:"finalWhatsappMessage",label:"Pesan WhatsApp CTA",type:"textarea"}],
+  portfolioPage:[{key:"eyebrow",label:"Eyebrow"},{key:"title",label:"Headline"},{key:"body",label:"Deskripsi",type:"textarea"},{key:"caseStudyLabel",label:"Label tombol studi kasus"},{key:"previewLabel",label:"Label tombol preview"},{key:"extraLinkLabel",label:"Label link tambahan"},{key:"emptyTitle",label:"Judul saat portfolio kosong"},{key:"emptyBody",label:"Deskripsi saat portfolio kosong",type:"textarea"}],
   contact:[{key:"whatsapp",label:"Nomor WhatsApp",hint:"Contoh: 62812..."},{key:"email",label:"Email"},{key:"instagram",label:"Instagram URL",type:"url"},{key:"tiktok",label:"TikTok URL",type:"url"}],
   footer:[{key:"note",label:"Catatan footer",type:"textarea"},{key:"copyright",label:"Teks copyright"},{key:"closingTagline",label:"Tagline penutup"},{key:"helpLinks",label:"Link bantuan footer (JSON)",type:"json"}],
   seo:[{key:"title",label:"SEO title"},{key:"description",label:"SEO description",type:"textarea"}],
@@ -191,7 +193,7 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
       </div>}
 
       {tab==="settings"&&<div className="admin-panel">
-        <div className="settings-tabs">{Object.keys(settingFields).map(k=><button className={settingsKey===k?"active":""} onClick={()=>setSettingsKey(k)} key={k}>{k==="brand"?"Brand":k==="hero"?"Hero":k==="navigation"?"Navigasi":k==="trust"?"Trust Strip":k==="process"?"Cara Kerja":k==="commerce"?"Penjualan":k==="contact"?"Kontak":k==="footer"?"Footer":"SEO"}</button>)}</div>
+        <div className="settings-tabs">{Object.keys(settingFields).map(k=><button className={settingsKey===k?"active":""} onClick={()=>setSettingsKey(k)} key={k}>{k==="brand"?"Brand":k==="hero"?"Hero":k==="navigation"?"Navigasi":k==="trust"?"Trust Strip":k==="process"?"Cara Kerja":k==="commerce"?"Penjualan":k==="servicesPage"?"Halaman Jasa":k==="portfolioPage"?"Halaman Portfolio":k==="contact"?"Kontak":k==="footer"?"Footer":"SEO"}</button>)}</div>
         <div className="admin-form-grid">{settingFields[settingsKey].map(f=><FormField key={f.key} field={f} value={settingsForm[f.key]} onChange={v=>setSettingsForm(x=>({...x,[f.key]:v}))}/>)}</div>
         <div className="admin-form-actions"><button className="button" onClick={saveSettings} disabled={busy}><Save size={16}/> Simpan Pengaturan</button></div>
       </div>}
