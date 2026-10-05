@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS payment_methods (
 CREATE TABLE IF NOT EXISTS orders (
   id serial PRIMARY KEY,
   code varchar(40) NOT NULL UNIQUE,
+  access_token varchar(80) NOT NULL UNIQUE,
   customer_name varchar(180) NOT NULL,
   customer_email varchar(220) NOT NULL,
   customer_whatsapp varchar(80) NOT NULL,
@@ -126,6 +127,11 @@ CREATE TABLE IF NOT EXISTS orders (
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
 );
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS access_token varchar(80);
+UPDATE orders SET access_token = md5(random()::text || clock_timestamp()::text || id::text) WHERE access_token IS NULL;
+ALTER TABLE orders ALTER COLUMN access_token SET NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS orders_access_token_idx ON orders(access_token);
+
 CREATE TABLE IF NOT EXISTS leads (
   id serial PRIMARY KEY,
   source varchar(120),
