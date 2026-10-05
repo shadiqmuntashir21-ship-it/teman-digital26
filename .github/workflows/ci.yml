@@ -16,3 +16,20 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run build
+      - name: Smoke test production routes
+        run: |
+          npm start > /tmp/teman-digital-next.log 2>&1 &
+          SERVER_PID=$!
+          trap "kill $SERVER_PID || true" EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:3000/ > /dev/null
+          curl -fsS http://127.0.0.1:3000/produk/dailyn > /dev/null
+          curl -fsS http://127.0.0.1:3000/jasa > /dev/null
+          curl -fsS http://127.0.0.1:3000/portfolio > /dev/null
+          curl -fsS http://127.0.0.1:3000/admin/login > /dev/null
+          curl -fsS http://127.0.0.1:3000/checkout/dailyn > /dev/null
