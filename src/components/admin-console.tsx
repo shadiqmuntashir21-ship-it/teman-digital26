@@ -4,14 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { ExternalLink, Eye, LayoutDashboard, LogOut, Pencil, Plus, RefreshCw, Save, Search, Trash2, X } from "lucide-react";
 
 type AnyRow=Record<string,any>;
-type Field={key:string;label:string;type?:"text"|"textarea"|"number"|"boolean"|"url"|"select"|"lines"|"json";options?:string[];hint?:string};
+type Field={key:string;label:string;type?:"text"|"textarea"|"number"|"boolean"|"url"|"media"|"select"|"lines"|"json";options?:string[];hint?:string};
 
 const configs:Record<string,{label:string;singular:string;fields:Field[];readOnly?:boolean}>={
   products:{label:"Produk",singular:"Produk",fields:[
     {key:"name",label:"Nama Produk"},{key:"slug",label:"Slug / URL"},{key:"category",label:"Kategori"},
     {key:"shortDescription",label:"Deskripsi singkat",type:"textarea"},{key:"description",label:"Deskripsi lengkap",type:"textarea"},
     {key:"price",label:"Harga",type:"number"},{key:"compareAtPrice",label:"Harga coret",type:"number"},{key:"badge",label:"Badge"},
-    {key:"imageUrl",label:"Gambar utama URL",type:"url"},{key:"gallery",label:"Gallery URL (satu per baris)",type:"lines"},
+    {key:"imageUrl",label:"Gambar utama",type:"media"},{key:"gallery",label:"Gallery URL (satu per baris)",type:"lines"},
     {key:"demoUrl",label:"Link Demo",type:"url"},{key:"appUrl",label:"Link Aplikasi",type:"url"},
     {key:"features",label:"Fitur (satu per baris)",type:"lines"},{key:"audience",label:"Untuk siapa (satu per baris)",type:"lines"},
     {key:"checkoutEnabled",label:"Checkout aktif",type:"boolean"},{key:"featured",label:"Produk unggulan",type:"boolean"},
@@ -28,14 +28,14 @@ const configs:Record<string,{label:string;singular:string;fields:Field[];readOnl
     {key:"title",label:"Nama Project"},{key:"slug",label:"Slug"},{key:"category",label:"Kategori"},
     {key:"summary",label:"Ringkasan",type:"textarea"},{key:"challenge",label:"Masalah / challenge",type:"textarea"},
     {key:"solution",label:"Solusi",type:"textarea"},{key:"result",label:"Hasil",type:"textarea"},
-    {key:"coverUrl",label:"Cover / screenshot URL",type:"url"},{key:"gallery",label:"Gallery URL (satu per baris)",type:"lines"},
+    {key:"coverUrl",label:"Cover / screenshot",type:"media"},{key:"gallery",label:"Gallery URL (satu per baris)",type:"lines"},
     {key:"previewUrl",label:"URL Preview / Live Web",type:"url",hint:"Tombol Preview Web akan memakai link ini."},
     {key:"sourceUrl",label:"Link tambahan / GitHub",type:"url"},{key:"technologies",label:"Teknologi (satu per baris)",type:"lines"},
     {key:"featured",label:"Tampilkan sebagai featured",type:"boolean"},{key:"published",label:"Tampilkan di website",type:"boolean"},{key:"sortOrder",label:"Urutan",type:"number"}
   ]},
   testimonials:{label:"Testimoni",singular:"Testimoni",fields:[
     {key:"name",label:"Nama"},{key:"role",label:"Peran"},{key:"company",label:"Perusahaan/instansi"},{key:"quote",label:"Testimoni",type:"textarea"},
-    {key:"avatarUrl",label:"Foto URL",type:"url"},{key:"productOrService",label:"Produk/Jasa"},{key:"published",label:"Tampilkan",type:"boolean"},{key:"sortOrder",label:"Urutan",type:"number"}
+    {key:"avatarUrl",label:"Foto",type:"media"},{key:"productOrService",label:"Produk/Jasa"},{key:"published",label:"Tampilkan",type:"boolean"},{key:"sortOrder",label:"Urutan",type:"number"}
   ]},
   faqs:{label:"FAQ",singular:"FAQ",fields:[
     {key:"question",label:"Pertanyaan",type:"textarea"},{key:"answer",label:"Jawaban",type:"textarea"},{key:"category",label:"Kategori"},
@@ -44,7 +44,7 @@ const configs:Record<string,{label:string;singular:string;fields:Field[];readOnl
   paymentMethods:{label:"Pembayaran",singular:"Metode Pembayaran",fields:[
     {key:"name",label:"Nama metode"},{key:"type",label:"Tipe",type:"select",options:["transfer","ewallet","qris","lainnya"]},
     {key:"accountName",label:"Atas nama"},{key:"accountNumber",label:"Nomor rekening/akun"},{key:"instructions",label:"Instruksi",type:"textarea"},
-    {key:"logoUrl",label:"Logo URL",type:"url"},{key:"enabled",label:"Aktif",type:"boolean"},{key:"sortOrder",label:"Urutan",type:"number"}
+    {key:"logoUrl",label:"Logo",type:"media"},{key:"enabled",label:"Aktif",type:"boolean"},{key:"sortOrder",label:"Urutan",type:"number"}
   ]},
   homepageSections:{label:"Section Homepage",singular:"Section",fields:[
     {key:"sectionKey",label:"Key section"},{key:"eyebrow",label:"Eyebrow"},{key:"title",label:"Judul"},{key:"body",label:"Isi",type:"textarea"},
@@ -231,9 +231,37 @@ function Status({row}:{row:AnyRow}){
 
 function FormField({field,value,onChange}:{field:Field;value:any;onChange:(v:any)=>void}){
   if(field.type==="boolean") return <label className="admin-toggle-field"><span><strong>{field.label}</strong>{field.hint&&<small>{field.hint}</small>}</span><input type="checkbox" checked={Boolean(value)} onChange={e=>onChange(e.target.checked)}/></label>;
+  if(field.type==="media") return <MediaField field={field} value={value} onChange={onChange}/>;
   return <label className={field.type==="textarea"||field.type==="json"||field.type==="lines"?"full":""}><span>{field.label}</span>{field.hint&&<small>{field.hint}</small>}
     {field.type==="textarea"||field.type==="json"||field.type==="lines"?<textarea rows={field.type==="json"?7:4} value={value??""} onChange={e=>onChange(e.target.value)}/>:
      field.type==="select"?<select value={value??""} onChange={e=>onChange(e.target.value)}>{field.options?.map(o=><option key={o} value={o}>{o}</option>)}</select>:
      <input type={field.type==="number"?"number":field.type==="url"?"url":"text"} value={value??""} onChange={e=>onChange(e.target.value)}/>}
+  </label>
+}
+
+function MediaField({field,value,onChange}:{field:Field;value:any;onChange:(v:any)=>void}){
+  const [uploading,setUploading]=useState(false);
+  const [error,setError]=useState("");
+
+  async function upload(file:File){
+    setUploading(true); setError("");
+    const body=new FormData(); body.append("file",file);
+    const r=await fetch("/api/admin/upload",{method:"POST",body});
+    const data=await r.json();
+    setUploading(false);
+    if(!r.ok){setError(data.message||"Upload gagal.");return}
+    onChange(data.url);
+  }
+
+  return <label className="full admin-media-field">
+    <span>{field.label}</span>{field.hint&&<small>{field.hint}</small>}
+    <div className="admin-media-row">
+      {value?<img src={String(value)} alt="Preview media"/>:<div className="admin-media-empty">Belum ada gambar</div>}
+      <div className="admin-media-controls">
+        <input type="url" value={value??""} onChange={e=>onChange(e.target.value)} placeholder="Paste URL atau upload gambar"/>
+        <label className="admin-upload-button">{uploading?"Mengunggah...":"Upload gambar"}<input type="file" accept="image/jpeg,image/png,image/webp,image/avif,image/gif" disabled={uploading} onChange={e=>{const f=e.target.files?.[0];if(f)upload(f)}}/></label>
+        {error&&<small className="admin-media-error">{error}</small>}
+      </div>
+    </div>
   </label>
 }
