@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { randomBytes } from "node:crypto";
 import { getDb } from "@/db/client";
+import { emailOrderCreated } from "@/lib/email";
 import { orders, products } from "@/db/schema";
 
 function orderCode(){
@@ -36,6 +37,14 @@ export async function POST(req:Request){
     amount:product.price,
     paymentMethodId:body.paymentMethodId?Number(body.paymentMethodId):null,
     status:"MENUNGGU_PEMBAYARAN"
+  });
+  void emailOrderCreated({
+    code,
+    customerName,
+    customerEmail,
+    productName:product.name,
+    amount:String(product.price),
+    accessToken,
   });
   return NextResponse.json({ok:true,code,accessToken});
 }
