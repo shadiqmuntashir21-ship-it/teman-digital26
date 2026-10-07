@@ -21,7 +21,7 @@ export default function AdminLogin(){
 
   return <main className="admin-login-page">
     <form className="admin-login-card" onSubmit={submit}>
-      <div className="admin-brand">Teman Digital</div>
+      <div className="admin-brand">KARVA</div>
       <span className="admin-kicker">CONTROL CENTER</span>
       <h1>Kelola website tanpa menyentuh kode.</h1>
       <p>Produk, harga, portfolio, link preview, jasa, FAQ, pembayaran, pesanan, dan konten utama dikelola dari sini.</p>
