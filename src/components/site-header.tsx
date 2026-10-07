@@ -1,33 +1,47 @@
+"use client";
+
 import Link from "next/link";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function SiteHeader({ settings }: { settings:any }) {
-  const logoUrl = settings?.brand?.logoUrl as string | undefined;
+  const [open,setOpen]=useState(false);
+  const [scrolled,setScrolled]=useState(false);
   const brandName = settings?.brand?.name || "KARVA";
-  const nav = settings?.navigation || {};
-  const links = Array.isArray(nav.links) && nav.links.length ? nav.links : [
+  const lightLogo = settings?.brand?.logoLightUrl || "/brand/karva-logo-light.png";
+
+  useEffect(()=>{
+    const onScroll=()=>setScrolled(window.scrollY>24);
+    onScroll();
+    window.addEventListener("scroll",onScroll,{passive:true});
+    return ()=>window.removeEventListener("scroll",onScroll);
+  },[]);
+
+  const links=[
     {label:"Produk",href:"/#produk"},
-    {label:"Jasa",href:"/jasa"},
-    {label:"Portfolio",href:"/portfolio"},
-    {label:"Cara Kerja",href:"/#cara-kerja"},
-    {label:"FAQ",href:"/#faq"},
+    {label:"Karya",href:"/#karya"},
+    {label:"Jasa",href:"/#jasa"},
   ];
 
   return (
-    <header className="site-header">
-      {nav.announcementEnabled && nav.announcementText ? (
-        <a className="announcement-bar" href={nav.announcementHref || "#"}>
-          <span>{nav.announcementText}</span>
-          <strong>→</strong>
-        </a>
-      ) : null}
-      <div className="nav-shell">
-        <Link href="/" className="brand-lockup" aria-label={brandName}>
-          {logoUrl ? <img src={logoUrl} alt={brandName} className="brand-logo" /> : <span className="brand-word">{brandName}</span>}
+    <header className={`site-header kv-site-header ${scrolled?"is-scrolled":""} ${open?"menu-open":""}`}>
+      <div className="kv-nav-shell">
+        <Link href="/" className="kv-brand" aria-label={brandName} onClick={()=>setOpen(false)}>
+          <img src={lightLogo} alt={brandName}/>
         </Link>
-        <nav className="desktop-nav" aria-label="Navigasi utama">
-          {links.map((item:any, i:number)=><Link href={item.href || "#"} key={String(item.label||i)}>{item.label || "Menu"}</Link>)}
+        <nav className="kv-desktop-nav" aria-label="Navigasi utama">
+          {links.map(item=><Link href={item.href} key={item.label}>{item.label}</Link>)}
         </nav>
-        <a className="button button-small" href={nav.ctaHref || "/#konsultasi"}>{nav.ctaLabel || "Konsultasi Gratis"}</a>
+        <div className="kv-nav-actions">
+          <Link className="kv-nav-cta" href="/#project">Mulai Project <ArrowUpRight size={14}/></Link>
+          <button className="kv-menu-button" type="button" aria-label={open?"Tutup menu":"Buka menu"} onClick={()=>setOpen(v=>!v)}>
+            {open?<X size={20}/>:<Menu size={20}/>}
+          </button>
+        </div>
+      </div>
+      <div className="kv-mobile-menu">
+        {links.map(item=><Link href={item.href} key={item.label} onClick={()=>setOpen(false)}>{item.label}<ArrowUpRight size={18}/></Link>)}
+        <Link className="kv-mobile-project" href="/#project" onClick={()=>setOpen(false)}>Mulai Project <ArrowUpRight size={18}/></Link>
       </div>
     </header>
   );
