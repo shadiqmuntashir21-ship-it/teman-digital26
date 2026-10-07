@@ -8,7 +8,7 @@ async function main(){
   const sql = neon(url);
   
   const settings = [
-    ["brand", {name:"Teman Digital",tagline:"Bangun Lebih Baik. Tumbuh Lebih Cepat.",logoUrl:"",primary:"#0F2747",blue:"#2563EB",cyan:"#38BDF8"}],
+    ["brand", {name:"KARVA",tagline:"Ide diwujudkan. Nilai diciptakan.",logoUrl:"",primary:"#0F2747",blue:"#2563EB",cyan:"#38BDF8"}],
     ["hero", {eyebrow:"PRODUK & SOLUSI DIGITAL",title:"Bikin digital jadi lebih mudah.",body:"Produk siap pakai dan solusi digital custom untuk membantu pekerjaan, bisnis, dan ide Anda tumbuh lebih cepat.",primaryLabel:"Jelajahi Produk",primaryHref:"#produk",secondaryLabel:"Konsultasi via WhatsApp"}],
     ["navigation", {
       links:[
@@ -35,13 +35,13 @@ async function main(){
     ]}],
     ["commerce", {proofProduct:"Produk mulai Rp39 ribu",proofConsultation:"Konsultasi tanpa biaya",proofWarranty:"Garansi bug sesuai scope"}],
     ["servicesPage", {
-      eyebrow:"JASA TEMAN DIGITAL",
+      eyebrow:"JASA KARVA",
       title:"Solusi custom, tanpa dibuat rumit.",
       body:"Ceritakan kebutuhanmu. Kami bantu merancang solusi yang tepat dan tetap realistis untuk digunakan.",
       finalEyebrow:"BELUM TAHU PAKETNYA?",
       finalTitle:"Ceritakan masalahnya, bukan teknologinya.",
       finalButton:"Konsultasi Gratis",
-      finalWhatsappMessage:"Halo Teman Digital, saya punya kebutuhan digital tapi belum tahu layanan yang cocok."
+      finalWhatsappMessage:"Halo KARVA, saya punya kebutuhan digital tapi belum tahu layanan yang cocok."
     }],
     ["portfolioPage", {
       eyebrow:"PORTFOLIO",
@@ -56,11 +56,11 @@ async function main(){
     ["contact", {whatsapp:"",email:"temandigital26@gmail.com",instagram:"",tiktok:""}],
     ["footer", {
       note:"Solusi digital yang rapi, modern, dan benar-benar bisa dipakai.",
-      copyright:"© 2026 Teman Digital",
-      closingTagline:"Bangun Lebih Baik. Tumbuh Lebih Cepat.",
+      copyright:"© 2026 KARVA",
+      closingTagline:"Ide diwujudkan. Nilai diciptakan.",
       helpLinks:[{label:"FAQ",href:"/#faq"},{label:"Portfolio",href:"/portfolio"}]
     }],
-    ["seo", {title:"Teman Digital — Produk & Solusi Digital",description:"Produk digital siap pakai dan jasa pembuatan website, dashboard, dan web custom."}]
+    ["seo", {title:"KARVA — Produk & Solusi Digital",description:"Produk digital siap pakai dan jasa pembuatan website, dashboard, dan web custom."}]
   ] as const;
   
   for (const [key,value] of settings) {
@@ -70,9 +70,8 @@ async function main(){
   
   const productRows = [
     ["dailyn","Dailyn","Produktivitas","Kelola aktivitas, kebiasaan, dan keuangan dalam satu tempat.","Life operating system yang membantu hari terasa lebih terarah.",39000,"Siap Pakai",1],
-    ["growva","Growva","Bisnis","Produk digital untuk membantu bisnis bertumbuh lebih teratur.","Solusi praktis untuk kebutuhan pengelolaan dan pertumbuhan bisnis.",39000,"Siap Pakai",2],
-    ["menuju-kita","Menuju Kita","Wedding","Wedding planner digital yang rapi dari persiapan sampai hari bahagia.","Ruang kerja digital untuk pasangan mengelola persiapan pernikahan dengan lebih tenang.",49000,"Premium",3],
-    ["kelaskita","KelasKita","Pendidikan","Administrasi wali kelas yang tidak lagi berantakan.","Satu aplikasi untuk membantu wali kelas mengelola data siswa dan administrasi kelas.",99000,"Pilihan Guru",4]
+    ["menuju-kita","Menuju Kita","Wedding Planner","Checklist, budget, tamu, vendor, timeline, dokumen, sampai Hari-H dalam satu ruang.","Wedding planner digital yang terasa personal untuk membantu pasangan menata semua detail menuju hari pernikahan.",49000,"Siap Pakai",2],
+    ["kelaskita","KelasKita","Pendidikan","Ruang kerja digital untuk mengelola kelas dan pembelajaran dengan lebih tenang.","Satu aplikasi untuk wali kelas dan guru mata pelajaran mengelola siswa, kehadiran, nilai, remedial, catatan, administrasi, dan laporan.",99000,"Pilihan Guru",3]
   ] as const;
   for (const p of productRows) {
     await sql`INSERT INTO products (slug,name,category,short_description,description,price,badge,featured,published,sort_order)
@@ -82,11 +81,11 @@ async function main(){
   
   const homepageRows = [
     ["choices","MULAI DARI SINI","Sudah jadi, atau bangun milikmu sendiri.","Dua jalur yang jelas. Pilih produk siap pakai untuk mulai cepat, atau ceritakan kebutuhanmu untuk solusi custom.",10],
-    ["products","PRODUK TEMAN DIGITAL","Solusi siap pakai untuk pekerjaan yang nyata.","",20],
+    ["products","PRODUK SIAP PAKAI","Sudah jadi. Tinggal coba dan gunakan.","Tiga produk KARVA yang bisa dilihat langsung sebelum membeli.",20],
     ["services","JASA CUSTOM","Butuh sesuatu yang khusus?","Harga awal transparan. Scope dibahas lebih dulu supaya solusi yang dibuat tepat, bukan sekadar banyak fitur.",30],
     ["portfolio","SELECTED WORKS","Bukan sekadar dibuat. Harus berguna.","",40],
     ["process","CARA KAMI BEKERJA","Dari cerita singkat sampai siap dipakai.","",50],
-    ["warranty","GARANSI TEMAN DIGITAL","Bug tidak punya masa garansi.","Jika error terjadi pada fitur yang termasuk scope awal pekerjaan, kami tetap membantu memperbaikinya. Penambahan fitur atau perubahan scope baru tidak termasuk garansi.",60],
+    ["warranty","GARANSI KARVA","Bug tidak punya masa garansi.","Jika error terjadi pada fitur yang termasuk scope awal pekerjaan, kami tetap membantu memperbaikinya. Penambahan fitur atau perubahan scope baru tidak termasuk garansi.",60],
     ["testimonials","CERITA PENGGUNA","Yang paling penting: benar-benar membantu.","",70],
     ["faq","FAQ","Sebelum mulai, mungkin ini yang ingin ditanyakan.","Pertanyaan umum tentang produk, jasa, proses pengerjaan, pembayaran, revisi, dan garansi.",80],
     ["consultation","MULAI DARI CERITA","Ada ide? Ceritakan saja dulu.","Tidak harus tahu teknologi apa yang dibutuhkan. Jelaskan masalah atau idenya, kami bantu memikirkan langkah berikutnya.",90]
@@ -113,10 +112,10 @@ async function main(){
   const password=process.env.BOOTSTRAP_ADMIN_PASSWORD;
   if(email && password){
     const hash=await bcrypt.hash(password,12);
-    await sql`INSERT INTO admins (email,password_hash,name,active) VALUES (${email.toLowerCase()},${hash},'Admin Teman Digital',true)
+    await sql`INSERT INTO admins (email,password_hash,name,active) VALUES (${email.toLowerCase()},${hash},'Admin KARVA',true)
     ON CONFLICT (email) DO UPDATE SET password_hash=excluded.password_hash, active=true`;
   }
-  console.log("Seed Teman Digital selesai.");
+  console.log("Seed KARVA selesai.");
   
 }
 
