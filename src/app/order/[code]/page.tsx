@@ -41,11 +41,11 @@ export default async function OrderPage({
   const settings=await getSettings();
   const current=level(order.status);
   const waNumber=String(settings.contact?.whatsapp||"").replace(/\D/g,"");
-  const waHref=waNumber ? "https://wa.me/"+waNumber+"?text="+encodeURIComponent("Halo Teman Digital, saya ingin bertanya tentang pesanan "+order.code) : "#";
+  const waHref=waNumber ? "https://wa.me/"+waNumber+"?text="+encodeURIComponent("Halo KARVA, saya ingin bertanya tentang pesanan "+order.code) : "#";
 
   return <main className="order-page">
     <div className="order-shell">
-      <div className="order-brand">Teman Digital</div>
+      <div className="order-brand">KARVA</div>
       <div className="order-head"><div><span>KODE PESANAN</span><h1>{order.code}</h1></div><div className={"order-state "+order.status.toLowerCase()}>{order.status.replaceAll("_"," ")}</div></div>
       <div className="order-grid">
         <section className="order-card">
@@ -54,14 +54,14 @@ export default async function OrderPage({
         </section>
         <section className="order-card order-summary-card">
           <span className="checkout-step">RINGKASAN</span>
-          <h2>{String((order.productSnapshot as any)?.name||"Produk Teman Digital")}</h2>
+          <h2>{String((order.productSnapshot as any)?.name||"Produk KARVA")}</h2>
           <div className="order-summary-line"><span>Total</span><strong>{rupiah(order.amount)}</strong></div>
           {method&&<div className="payment-instruction"><small>Bayar melalui</small><strong>{method.name}</strong>{method.accountNumber&&<code>{method.accountNumber}</code>}{method.accountName&&<span>a.n. {method.accountName}</span>}{method.instructions&&<p>{method.instructions}</p>}</div>}
         </section>
       </div>
 
       {order.status==="MENUNGGU_PEMBAYARAN"&&<PaymentProofForm code={order.code} token={token}/>}
-      {order.status==="MENUNGGU_VERIFIKASI"&&<div className="proof-received"><Check size={18}/><div><strong>Bukti pembayaran sudah diterima.</strong><span>Admin Teman Digital akan melakukan verifikasi. Status halaman ini akan diperbarui setelah pembayaran dikonfirmasi.</span></div></div>}
+      {order.status==="MENUNGGU_VERIFIKASI"&&<div className="proof-received"><Check size={18}/><div><strong>Bukti pembayaran sudah diterima.</strong><span>Admin KARVA akan melakukan verifikasi. Status halaman ini akan diperbarui setelah pembayaran dikonfirmasi.</span></div></div>}
 
       <div className="order-help"><Mail size={16}/><span>Konfirmasi dan akses dikirim ke <strong>{order.customerEmail}</strong>.</span><a href={waHref}><MessageCircle size={15}/> Butuh bantuan?</a></div>
     </div>
