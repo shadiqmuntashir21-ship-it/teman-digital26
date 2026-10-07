@@ -67,7 +67,7 @@ export default async function ProductPage({ params }: { params: Promise<{slug:st
         </div>
       </section>}
 
-      {p.appUrl && <section className="section product-access-section"><div className="container"><div className="app-link-card"><div><span className="eyebrow">SUDAH PUNYA AKSES?</span><strong>Buka {p.name}</strong><p>Akses aplikasi melalui alamat resmi produk Teman Digital.</p></div><a href={p.appUrl} target="_blank" rel="noreferrer" className="button">Buka Aplikasi <ArrowUpRight size={18}/></a></div></div></section>}
+      {p.appUrl && <section className="section product-access-section"><div className="container"><div className="app-link-card"><div><span className="eyebrow">SUDAH PUNYA AKSES?</span><strong>Buka {p.name}</strong><p>Akses aplikasi melalui alamat resmi produk KARVA.</p></div><a href={p.appUrl} target="_blank" rel="noreferrer" className="button">Buka Aplikasi <ArrowUpRight size={18}/></a></div></div></section>}
 
       {p.faq?.length>0&&<section className="section product-faq-section">
         <div className="container faq-grid">
@@ -81,7 +81,7 @@ export default async function ProductPage({ params }: { params: Promise<{slug:st
           <div><div className="eyebrow light">MASIH RAGU?</div><h2>Tanyakan tentang {p.name}.</h2><p>Kami bantu jelaskan produknya sebelum Anda membeli.</p></div>
           <div className="cta-buttons">
             {p.checkoutEnabled&&<Link className="button button-light" href={`/checkout/${p.slug}`}>Beli {p.name}</Link>}
-            <WhatsAppLink number={contact.whatsapp || ""} message={`Halo Teman Digital, saya ingin bertanya tentang ${p.name}.`} label="Tanya via WhatsApp" subject={p.name} className="button button-ghost-light"/>
+            <WhatsAppLink number={contact.whatsapp || ""} message={`Halo KARVA, saya ingin bertanya tentang ${p.name}.`} label="Tanya via WhatsApp" subject={p.name} className="button button-ghost-light"/>
           </div>
         </div>
       </section>
