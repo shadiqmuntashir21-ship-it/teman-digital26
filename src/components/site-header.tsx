@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function SiteHeader({ settings }: { settings:any }) {
   const logoUrl = settings?.brand?.logoUrl as string | undefined;
-  const brandName = settings?.brand?.name || "Teman Digital";
+  const brandName = settings?.brand?.name || "KARVA";
   const nav = settings?.navigation || {};
   const links = Array.isArray(nav.links) && nav.links.length ? nav.links : [
     {label:"Produk",href:"/#produk"},
