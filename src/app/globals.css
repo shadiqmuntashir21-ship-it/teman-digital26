@@ -363,3 +363,16 @@ a,button,.choice-card,.service-row,.admin-panel,.admin-stat-grid>div{transition:
   body,.marquee-track{animation:none!important}
   *{scroll-behavior:auto!important}
 }
+
+.live-frame-wrap{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#eef3f9}
+.live-frame-wrap iframe{position:absolute;top:0;left:0;width:1600px;height:1000px;border:0;transform-origin:top left;transform:scale(var(--frame-scale,.6));pointer-events:none;background:white}
+.browser-frame .live-frame-wrap{--frame-scale:.6}
+.portfolio-live{--frame-scale:.6}
+.detail-live-frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:18px;background:#eef3f9}
+.detail-live-frame iframe{position:absolute;inset:0;width:1600px;height:1000px;border:0;transform-origin:top left;transform:scale(.6);pointer-events:none;background:#fff}
+@media(max-width:1100px){
+  .live-frame-wrap iframe,.detail-live-frame iframe{width:1400px;height:875px;transform:scale(calc(100vw / 1450))}
+}
+@media(max-width:860px){
+  .live-frame-wrap iframe,.detail-live-frame iframe{width:1200px;height:750px;transform:scale(calc((100vw - 40px) / 1200))}
+}

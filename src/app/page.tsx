@@ -135,7 +135,7 @@ export default async function HomePage() {
                 <a className="product-showcase-preview" href={p.demoUrl || p.appUrl || `/produk/${p.slug}`} target={p.demoUrl || p.appUrl ? "_blank" : undefined} rel={p.demoUrl || p.appUrl ? "noreferrer" : undefined} aria-label={`Buka preview ${p.name}`}>
                   <div className="browser-frame">
                     <div className="browser-bar"><span/><span/><span/><em>{p.demoUrl ? new URL(p.demoUrl).hostname : "temandigital.app"}</em></div>
-                    {p.imageUrl ? <img src={p.imageUrl} alt={`Preview ${p.name}`} loading="lazy"/> : <div className="app-preview"><div className="app-preview-nav"><span/><span/><span/></div><div className="app-preview-body"><div className="preview-line wide"/><div className="preview-line"/><div className="preview-panels"><i/><i/><i/></div></div></div>}
+                    {p.imageUrl ? <img src={p.imageUrl} alt={`Preview ${p.name}`} loading="lazy"/> : p.demoUrl ? <div className="live-frame-wrap"><iframe src={p.demoUrl} title={`Preview ${p.name}`} loading="lazy" tabIndex={-1}/></div> : <div className="app-preview"><div className="app-preview-nav"><span/><span/><span/></div><div className="app-preview-body"><div className="preview-line wide"/><div className="preview-line"/><div className="preview-panels"><i/><i/><i/></div></div></div>}
                   </div>
                   <span className="preview-hover">Buka live preview <ArrowUpRight size={16}/></span>
                 </a>
@@ -189,7 +189,7 @@ export default async function HomePage() {
           {featuredPortfolio.length ? <div className="portfolio-showcase">{featuredPortfolio.map((p:any, i:number) => (
             <article className="portfolio-showcase-item" key={p.slug}>
               <a className="portfolio-showcase-preview" href={p.previewUrl || `/portfolio/${p.slug}`} target={p.previewUrl ? "_blank" : undefined} rel={p.previewUrl ? "noreferrer" : undefined}>
-                {p.coverUrl ? <img src={p.coverUrl} alt={`Preview ${p.title}`} loading="lazy"/> : <div className="portfolio-placeholder"><span>{p.category}</span><strong>{p.title}</strong></div>}
+                {p.coverUrl ? <img src={p.coverUrl} alt={`Preview ${p.title}`} loading="lazy"/> : p.previewUrl ? <div className="live-frame-wrap portfolio-live"><iframe src={p.previewUrl} title={`Preview ${p.title}`} loading="lazy" tabIndex={-1}/></div> : <div className="portfolio-placeholder"><span>{p.category}</span><strong>{p.title}</strong></div>}
                 {p.previewUrl && <span className="preview-hover dark-hover">Buka project <ArrowUpRight size={16}/></span>}
               </a>
               <div className="portfolio-showcase-copy">

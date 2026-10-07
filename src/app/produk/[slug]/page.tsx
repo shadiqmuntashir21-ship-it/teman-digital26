@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: { params: Promise<{slug:st
               <div className="product-micro-proof"><span><Check size={14}/> Sekali bayar sesuai penawaran</span><span><Check size={14}/> Akses dikirim setelah pembayaran terverifikasi</span></div>
             </div>
             <div className="detail-device">
-              {p.imageUrl ? <img src={p.imageUrl} alt={p.name}/> : <div className="device-placeholder"><MonitorSmartphone size={42}/><strong>{p.name}</strong><span>Upload screenshot produk lewat Dashboard Admin</span></div>}
+              {p.imageUrl ? <img src={p.imageUrl} alt={p.name}/> : (p.demoUrl || p.appUrl) ? <div className="detail-live-frame"><iframe src={p.demoUrl || p.appUrl} title={`Preview ${p.name}`} loading="lazy" tabIndex={-1}/></div> : <div className="device-placeholder"><MonitorSmartphone size={42}/><strong>{p.name}</strong><span>Preview produk belum tersedia</span></div>}
             </div>
           </div>
         </div>
