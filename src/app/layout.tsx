@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import { getSettings } from "@/lib/cms";
 import "./globals.css";
+import { MotionEnhancer } from "@/components/motion-enhancer";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id">
-      <body className={manrope.variable}>{children}</body>
+      <body className={manrope.variable}><MotionEnhancer/>{children}</body>
     </html>
   );
 }

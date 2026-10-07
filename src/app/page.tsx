@@ -129,18 +129,26 @@ export default async function HomePage() {
       node:<section className="section products-section" id="produk">
         <div className="container">
           <div className="section-heading"><div className="eyebrow">{productSection.eyebrow}</div><h2>{productSection.title}</h2>{productSection.body&&<p>{productSection.body}</p>}</div>
-          <div className="product-grid">
+          <div className="product-showcase">
             {products.map((p:any, i:number) => (
-              <article className="product-card" key={p.slug}>
-                <div className="product-visual">
-                  <div className="product-number">0{i+1}</div>
-                  {p.imageUrl ? <img className="product-real-image" src={p.imageUrl} alt={p.name}/> :
-                    <div className="app-preview"><div className="app-preview-nav"><span/><span/><span/></div><div className="app-preview-body"><div className="preview-line wide"/><div className="preview-line"/><div className="preview-panels"><i/><i/><i/></div></div></div>}
-                  {p.badge && <span className="badge">{p.badge}</span>}
-                </div>
-                <div className="product-meta">
-                  <div><span className="category">{p.category}</span><h3>{p.name}</h3><p>{p.shortDescription}</p></div>
-                  <div className="product-bottom"><strong>{rupiah(p.price)}</strong><Link href={`/produk/${p.slug}`} className="text-link">Lihat detail <ChevronRight size={16}/></Link></div>
+              <article className={`product-showcase-item ${i % 2 ? "reverse" : ""}`} key={p.slug}>
+                <a className="product-showcase-preview" href={p.demoUrl || p.appUrl || `/produk/${p.slug}`} target={p.demoUrl || p.appUrl ? "_blank" : undefined} rel={p.demoUrl || p.appUrl ? "noreferrer" : undefined} aria-label={`Buka preview ${p.name}`}>
+                  <div className="browser-frame">
+                    <div className="browser-bar"><span/><span/><span/><em>{p.demoUrl ? new URL(p.demoUrl).hostname : "temandigital.app"}</em></div>
+                    {p.imageUrl ? <img src={p.imageUrl} alt={`Preview ${p.name}`} loading="lazy"/> : <div className="app-preview"><div className="app-preview-nav"><span/><span/><span/></div><div className="app-preview-body"><div className="preview-line wide"/><div className="preview-line"/><div className="preview-panels"><i/><i/><i/></div></div></div>}
+                  </div>
+                  <span className="preview-hover">Buka live preview <ArrowUpRight size={16}/></span>
+                </a>
+                <div className="product-showcase-copy">
+                  <div className="showcase-index">0{i+1}</div>
+                  <div className="showcase-tags"><span>{p.category}</span>{p.badge&&<span>{p.badge}</span>}</div>
+                  <h3>{p.name}</h3>
+                  <p>{p.shortDescription}</p>
+                  <strong className="showcase-price">{rupiah(p.price)}</strong>
+                  <div className="showcase-actions">
+                    {(p.demoUrl || p.appUrl) && <a className="button button-secondary" href={p.demoUrl || p.appUrl} target="_blank" rel="noreferrer">Lihat Live Preview <ArrowUpRight size={16}/></a>}
+                    <Link className="button" href={p.checkoutEnabled ? `/checkout/${p.slug}` : `/produk/${p.slug}`}>{p.checkoutEnabled ? `Beli ${p.name}` : "Lihat Detail"}</Link>
+                  </div>
                 </div>
               </article>
             ))}
@@ -178,13 +186,22 @@ export default async function HomePage() {
             <div><div className="eyebrow light">{portfolioSection.eyebrow}</div><h2>{portfolioSection.title}</h2>{portfolioSection.body&&<p>{portfolioSection.body}</p>}</div>
             <Link href="/portfolio" className="button button-ghost-light">Lihat semua portfolio <ArrowUpRight size={18}/></Link>
           </div>
-          {featuredPortfolio.length ? <div className="portfolio-grid">{featuredPortfolio.map((p:any) => (
-            <article className="portfolio-card" key={p.slug}>
-              <div className="portfolio-cover">
-                {p.coverUrl ? <img src={p.coverUrl} alt={p.title}/> : <div className="portfolio-placeholder"><span>{p.category}</span><strong>{p.title}</strong></div>}
-                {p.previewUrl && <a href={p.previewUrl} target="_blank" rel="noreferrer" className="live-chip">Preview live <ArrowUpRight size={14}/></a>}
+          {featuredPortfolio.length ? <div className="portfolio-showcase">{featuredPortfolio.map((p:any, i:number) => (
+            <article className="portfolio-showcase-item" key={p.slug}>
+              <a className="portfolio-showcase-preview" href={p.previewUrl || `/portfolio/${p.slug}`} target={p.previewUrl ? "_blank" : undefined} rel={p.previewUrl ? "noreferrer" : undefined}>
+                {p.coverUrl ? <img src={p.coverUrl} alt={`Preview ${p.title}`} loading="lazy"/> : <div className="portfolio-placeholder"><span>{p.category}</span><strong>{p.title}</strong></div>}
+                {p.previewUrl && <span className="preview-hover dark-hover">Buka project <ArrowUpRight size={16}/></span>}
+              </a>
+              <div className="portfolio-showcase-copy">
+                <span className="portfolio-number">0{i+1}</span>
+                <div className="eyebrow light">{p.category}</div>
+                <h3>{p.title}</h3><p>{p.summary}</p>
+                {p.technologies?.length>0&&<div className="showcase-tags dark">{p.technologies.slice(0,4).map((x:string)=><span key={x}>{x}</span>)}</div>}
+                <div className="showcase-actions">
+                  {p.previewUrl&&<a className="button button-light" href={p.previewUrl} target="_blank" rel="noreferrer">Lihat Project <ArrowUpRight size={16}/></a>}
+                  <Link href={`/portfolio/${p.slug}`} className="button button-ghost-light">Studi Kasus</Link>
+                </div>
               </div>
-              <div className="portfolio-copy"><span>{p.category}</span><h3>{p.title}</h3><p>{p.summary}</p><Link href={`/portfolio/${p.slug}`} className="case-link">Lihat Studi Kasus <ArrowUpRight size={14}/></Link></div>
             </article>
           ))}</div> : <div className="empty-showcase"><span>Portfolio siap ditambahkan dari Dashboard Admin</span><strong>Tambahkan screenshot, deskripsi, teknologi, dan URL preview tanpa menyentuh kode.</strong></div>}
         </div>
@@ -284,6 +301,14 @@ export default async function HomePage() {
         <div className="container trust-row">
           <strong>{trust.title || "Produk digital yang benar-benar dibuat untuk digunakan."}</strong>
           <div className="trust-tags">{trustTags.map((tag:string)=><span key={tag}>{tag}</span>)}</div>
+        </div>
+      </section>
+
+      <section className="motion-marquee" aria-label="Layanan Teman Digital">
+        <div className="marquee-track">
+          {[0,1].map((loop)=><div className="marquee-set" aria-hidden={loop===1} key={loop}>
+            {["WEBSITE","DASHBOARD","PWA","PRODUK DIGITAL","DESAIN CLEAN","RESPONSIF","SIAP DIPAKAI"].map((item)=><span key={`${loop}-${item}`}><b>✦</b>{item}</span>)}
+          </div>)}
         </div>
       </section>
 
