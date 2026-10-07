@@ -16,8 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
     applicationName: brand.name || "KARVA",
     metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
     icons: {
-      icon: (brand.iconUrl as string) || "https://drive.google.com/uc?export=view&id=1lbrTGgSwn00movxd0J2umA8RXfU1yVKy",
-      apple: (brand.iconUrl as string) || "https://drive.google.com/uc?export=view&id=1lbrTGgSwn00movxd0J2umA8RXfU1yVKy",
+      icon: (brand.iconUrl as string) || "/brand/karva-icon.png",
+      apple: (brand.iconUrl as string) || "/brand/karva-icon.png",
     },
     openGraph: {
       title: seo.title || "KARVA — Ide diwujudkan. Nilai diciptakan.",
