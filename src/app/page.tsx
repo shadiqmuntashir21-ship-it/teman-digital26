@@ -60,7 +60,7 @@ export default async function HomePage() {
     body:"Dua jalur yang jelas. Pilih produk siap pakai untuk mulai cepat, atau ceritakan kebutuhanmu untuk solusi custom."
   },10);
   const productSection = section("products", {
-    eyebrow:"PRODUK TEMAN DIGITAL",
+    eyebrow:"PRODUK KARVA",
     title:"Solusi siap pakai untuk pekerjaan yang nyata.",
     body:""
   },20);
@@ -80,7 +80,7 @@ export default async function HomePage() {
     body:""
   },50);
   const warrantySection = section("warranty", {
-    eyebrow:"GARANSI TEMAN DIGITAL",
+    eyebrow:"GARANSI KARVA",
     title:"Bug tidak punya masa garansi.",
     body:"Jika error terjadi pada fitur yang termasuk scope awal pekerjaan, kami tetap membantu memperbaikinya. Penambahan fitur atau perubahan scope baru tidak termasuk garansi."
   },60);
@@ -134,7 +134,7 @@ export default async function HomePage() {
               <article className={`product-showcase-item ${i % 2 ? "reverse" : ""}`} key={p.slug}>
                 <a className="product-showcase-preview" href={p.demoUrl || p.appUrl || `/produk/${p.slug}`} target={p.demoUrl || p.appUrl ? "_blank" : undefined} rel={p.demoUrl || p.appUrl ? "noreferrer" : undefined} aria-label={`Buka preview ${p.name}`}>
                   <div className="browser-frame">
-                    <div className="browser-bar"><span/><span/><span/><em>{p.demoUrl ? new URL(p.demoUrl).hostname : "temandigital.app"}</em></div>
+                    <div className="browser-bar"><span/><span/><span/><em>{p.demoUrl ? new URL(p.demoUrl).hostname : "karva.studio"}</em></div>
                     {p.imageUrl ? <img src={p.imageUrl} alt={`Preview ${p.name}`} loading="lazy"/> : p.demoUrl ? <div className="live-frame-wrap"><iframe src={p.demoUrl} title={`Preview ${p.name}`} loading="lazy" tabIndex={-1}/></div> : <div className="app-preview"><div className="app-preview-nav"><span/><span/><span/></div><div className="app-preview-body"><div className="preview-line wide"/><div className="preview-line"/><div className="preview-panels"><i/><i/><i/></div></div></div>}
                   </div>
                   <span className="preview-hover">Buka live preview <ArrowUpRight size={16}/></span>
@@ -171,7 +171,7 @@ export default async function HomePage() {
                 <div className="service-name"><h3>{s.name}</h3><p>{s.description}</p></div>
                 <div className="service-facts"><span>{s.duration}</span><span>{s.revisions}</span></div>
                 <div className="service-price"><small>Mulai</small><strong>{rupiah(s.startingPrice)}</strong></div>
-                <WhatsAppLink number={contact.whatsapp || ""} message={s.whatsappMessage || `Halo Teman Digital, saya ingin konsultasi ${s.name}.`} label="Konsultasi" subject={s.name} className="round-link"/>
+                <WhatsAppLink number={contact.whatsapp || ""} message={s.whatsappMessage || `Halo KARVA, saya ingin konsultasi ${s.name}.`} label="Konsultasi" subject={s.name} className="round-link"/>
               </div>
             ))}
           </div>
@@ -259,7 +259,7 @@ export default async function HomePage() {
         <div className="container final-cta-inner">
           <div><div className="eyebrow light">{consultationSection.eyebrow}</div><h2>{consultationSection.title}</h2><p>{consultationSection.body}</p></div>
           <div className="cta-buttons">
-            <WhatsAppLink number={contact.whatsapp || ""} message="Halo Teman Digital, saya punya ide/kebutuhan digital dan ingin konsultasi." label="Konsultasi via WhatsApp" subject="Final CTA" className="button button-light"/>
+            <WhatsAppLink number={contact.whatsapp || ""} message="Halo KARVA, saya punya ide/kebutuhan digital dan ingin konsultasi." label="Konsultasi via WhatsApp" subject="Final CTA" className="button button-light"/>
             <a href="#produk" className="button button-ghost-light">Lihat Produk</a>
           </div>
         </div>
@@ -281,7 +281,7 @@ export default async function HomePage() {
             <p className="hero-lead">{hero.body}</p>
             <div className="hero-actions">
               <a className="button button-light" href={hero.primaryHref || "#produk"}>{hero.primaryLabel || "Jelajahi Produk"} <ArrowUpRight size={18}/></a>
-              <WhatsAppLink number={contact.whatsapp || ""} message="Halo Teman Digital, saya ingin konsultasi tentang kebutuhan digital saya." label={hero.secondaryLabel || "Konsultasi via WhatsApp"} subject="Konsultasi dari Homepage" className="button button-ghost-light"/>
+              <WhatsAppLink number={contact.whatsapp || ""} message="Halo KARVA, saya ingin konsultasi tentang kebutuhan digital saya." label={hero.secondaryLabel || "Konsultasi via WhatsApp"} subject="Konsultasi dari Homepage" className="button button-ghost-light"/>
             </div>
             <div className="hero-proof">
               <span><Check size={15}/> {commerce.proofProduct || "Produk mulai Rp39 ribu"}</span>
@@ -289,9 +289,9 @@ export default async function HomePage() {
               <span><Check size={15}/> {commerce.proofWarranty || "Garansi bug sesuai scope"}</span>
             </div>
           </div>
-          <div className="product-universe" aria-label="Ekosistem produk Teman Digital">
+          <div className="product-universe" aria-label="Ekosistem produk KARVA">
             <div className="universe-glow" /><div className="orbit orbit-one" /><div className="orbit orbit-two" />
-            <div className="universe-center"><span>Teman</span><strong>Digital</strong><small>PRODUCT UNIVERSE</small></div>
+            <div className="universe-center"><span>KARVA</span><strong>Studio</strong><small>PRODUCT UNIVERSE</small></div>
             {products.slice(0,4).map((p:any, i:number) => <Link href={`/produk/${p.slug}`} className={`floating-product fp-${i+1}`} key={p.slug}><div className="mini-app-top"><span className="mini-dot"/><span>{p.category}</span></div><strong>{p.name}</strong><small>{p.shortDescription}</small><span className="mini-price">{rupiah(p.price)}</span></Link>)}
           </div>
         </div>
@@ -304,7 +304,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="motion-marquee" aria-label="Layanan Teman Digital">
+      <section className="motion-marquee" aria-label="Layanan KARVA">
         <div className="marquee-track">
           {[0,1].map((loop)=><div className="marquee-set" aria-hidden={loop===1} key={loop}>
             {["WEBSITE","DASHBOARD","PWA","PRODUK DIGITAL","DESAIN CLEAN","RESPONSIF","SIAP DIPAKAI"].map((item)=><span key={`${loop}-${item}`}><b>✦</b>{item}</span>)}
@@ -318,12 +318,12 @@ export default async function HomePage() {
 
       <footer className="footer">
         <div className="container footer-grid">
-          <div className="footer-brand"><strong>{settings.brand?.name || "Teman Digital"}</strong><p>{settings.brand?.tagline}</p><small>{settings.footer?.note}</small></div>
+          <div className="footer-brand"><strong>{settings.brand?.name || "KARVA"}</strong><p>{settings.brand?.tagline}</p><small>{settings.footer?.note}</small></div>
           <div><strong>Produk</strong>{products.slice(0,5).map((p:any)=><Link href={`/produk/${p.slug}`} key={p.slug}>{p.name}</Link>)}</div>
           <div><strong>Layanan</strong>{services.map((s:any)=><a href="#jasa" key={s.slug}>{s.name}</a>)}</div>
           <div><strong>Bantuan</strong>{helpLinks.map((item:any,i:number)=><a href={item.href || "#"} key={String(item.label||i)}>{item.label || "Link"}</a>)}<a href={`mailto:${contact.email || "temandigital26@gmail.com"}`}>Email</a>{whatsappDigits&&<a href={`https://wa.me/${whatsappDigits}`} target="_blank" rel="noreferrer">WhatsApp</a>}{contact.instagram&&<a href={contact.instagram} target="_blank" rel="noreferrer">Instagram</a>}{contact.tiktok&&<a href={contact.tiktok} target="_blank" rel="noreferrer">TikTok</a>}</div>
         </div>
-        <div className="container footer-bottom"><span>{footerSettings.copyright || `© 2026 ${settings.brand?.name || "Teman Digital"}`}</span><span>{footerSettings.closingTagline || settings.brand?.tagline || "Bangun Lebih Baik. Tumbuh Lebih Cepat."}</span></div>
+        <div className="container footer-bottom"><span>{footerSettings.copyright || `© 2026 ${settings.brand?.name || "KARVA"}`}</span><span>{footerSettings.closingTagline || settings.brand?.tagline || "Bangun Lebih Baik. Tumbuh Lebih Cepat."}</span></div>
       </footer>
     </main>
   );
