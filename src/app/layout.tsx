@@ -11,15 +11,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = settings.seo || {};
   const brand = settings.brand || {};
   return {
-    title: seo.title || "Teman Digital — Produk & Solusi Digital",
+    title: seo.title || "KARVA — Ide diwujudkan. Nilai diciptakan.",
     description: seo.description || "Produk digital siap pakai dan solusi custom untuk kebutuhan nyata.",
-    applicationName: brand.name || "Teman Digital",
+    applicationName: brand.name || "KARVA",
     metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
+    icons: {
+      icon: (brand.iconUrl as string) || "https://drive.google.com/uc?export=view&id=1lbrTGgSwn00movxd0J2umA8RXfU1yVKy",
+      apple: (brand.iconUrl as string) || "https://drive.google.com/uc?export=view&id=1lbrTGgSwn00movxd0J2umA8RXfU1yVKy",
+    },
     openGraph: {
-      title: seo.title || "Teman Digital — Produk & Solusi Digital",
+      title: seo.title || "KARVA — Ide diwujudkan. Nilai diciptakan.",
       description: seo.description || "Produk digital siap pakai dan solusi custom untuk kebutuhan nyata.",
       type: "website",
-      siteName: brand.name || "Teman Digital",
+      siteName: brand.name || "KARVA",
     },
   };
 }
