@@ -180,13 +180,13 @@ export function AdminConsole({session}:{session:{name:string;email:string}}){
 
   return <main className="admin-shell">
     <aside className="admin-sidebar">
-      <div className="admin-sidebar-brand"><strong>Teman Digital</strong><span>CONTROL CENTER</span></div>
+      <div className="admin-sidebar-brand"><strong>KARVA</strong><span>CONTROL CENTER</span></div>
       <nav>{menu.map(([key,label])=><button key={key} onClick={()=>{setTab(key);setSearch("")}} className={tab===key?"active":""}>{key==="overview"&&<LayoutDashboard size={16}/>}<span>{label}</span></button>)}</nav>
       <div className="admin-sidebar-bottom"><span>{session.name}</span><small>{session.email}</small><button onClick={logout}><LogOut size={15}/> Keluar</button></div>
     </aside>
 
     <section className="admin-main">
-      <header className="admin-topbar"><div><span className="admin-kicker">TEMAN DIGITAL</span><h1>{tab==="overview"?"Ringkasan":tab==="settings"?"Website & Brand":configs[tab]?.label}</h1></div><div className="admin-top-actions"><a className="admin-preview-button" href="/" target="_blank"><Eye size={16}/> Preview Website</a><button className="admin-icon-button" onClick={load}><RefreshCw size={16}/></button></div></header>
+      <header className="admin-topbar"><div><span className="admin-kicker">KARVA</span><h1>{tab==="overview"?"Ringkasan":tab==="settings"?"Website & Brand":configs[tab]?.label}</h1></div><div className="admin-top-actions"><a className="admin-preview-button" href="/" target="_blank"><Eye size={16}/> Preview Website</a><button className="admin-icon-button" onClick={load}><RefreshCw size={16}/></button></div></header>
       {notice&&<div className="admin-notice" onClick={()=>setNotice("")}>{notice}<X size={14}/></div>}
 
       {tab==="overview"&&<div className="admin-overview">
